@@ -1,0 +1,28 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: rgb(8, 8, 8);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.button {
+  @apply border text-white px-2 py-3 rounded-lg hover:border-white/50;
+}
+.input {
+  @apply bg-black border rounded-lg px-2 py-1 text-white;
+}
