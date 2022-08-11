@@ -2,7 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { verify } from 'jsonwebtoken';
 import { serialize } from 'cookie';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function handlerLogout(req: NextApiRequest, res: NextApiResponse) {
+  //We read the jwt from the cookie
   const { JWTSession } = req.cookies;
 
   if (!JWTSession) {
@@ -11,6 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
+  //We verify if the token is valid
   try {
     verify(JWTSession, process.env.PRIVATE_KEY);
 
@@ -21,7 +23,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       maxAge: 0,
       path: '/',
     });
-
+    
+    //We set the cookie to null
     res.setHeader('Set-Cookie', serialized);
     res.status(200).json('Logout success');
   } catch (err) {

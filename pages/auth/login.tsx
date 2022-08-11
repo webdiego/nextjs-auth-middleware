@@ -3,10 +3,17 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import LoginImg from '/public/img/login.jpeg';
+
+type FormLoginData = {
+  username: string;
+  password: string;
+};
+
 export default function Login() {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
-  const onSubmit = async (data) => {
+  
+  const onSubmit = async (data: FormLoginData) => {
     await axios
       .post('/api/auth/login', data)
       .then((res) => {

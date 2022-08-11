@@ -5,11 +5,16 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import RegisterImg from '/public/img/register.jpeg';
 
+type FormRegisterData = {
+  username: string;
+  password: string;
+};
+
 export default function Register() {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormRegisterData) => {
     await axios
       .post('/api/auth/register', data)
       .then((res) => {
@@ -28,7 +33,9 @@ export default function Register() {
         <Image src={RegisterImg} alt="home" />
       </div>
       <div className="w-1/3 ">
-        <h1 className="text-2xl text-white"> </h1>
+        <h1 className="text-sm text-white mb-5">
+          The there isn&apos;t a database for register😬😬
+        </h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className=" flex flex-col justify-center align-center"

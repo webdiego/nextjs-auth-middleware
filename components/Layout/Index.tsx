@@ -1,15 +1,17 @@
-import Image from 'next/image';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Link from 'next/link';
-interface LayoutProps {
+import cookie from 'cookie';
+
+type LayoutProps = {
   children: React.ReactNode;
-}
+};
 
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   let pathName = router.pathname;
+  let JWTSession = cookie.parse('JWTSession');
   const logout = async () => {
     await axios
       .post('/api/auth/logout')
@@ -38,29 +40,28 @@ export default function Layout({ children }: LayoutProps) {
               </Link>
             </div>
             <div className="ml-10 space-x-4">
-              {pathName === '/' && (
-                <a
-                  href="/auth/login"
-                  className="inline-block bg-black py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75"
-                >
-                  Login
-                </a>
-              )}
+              {pathName === '/' ||
+                (pathName === '/auth/register' && (
+                  <Link href="/auth/login">
+                    <button className="inline-block bg-black py-2 px-4 border-[1px] rounded-md text-base font-medium text-white hover:bg-opacity-75">
+                      Login
+                    </button>
+                  </Link>
+                ))}
 
               {pathName === '/home' ? (
-                <a
+                <button
                   onClick={() => logout()}
                   className="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-black border-black "
                 >
                   Logout
-                </a>
+                </button>
               ) : (
-                <a
-                  href="/auth/register"
-                  className="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-black border-black "
-                >
-                  Register
-                </a>
+                <Link href="/auth/register">
+                  <button className="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-black border-black ">
+                    Register
+                  </button>
+                </Link>
               )}
             </div>
           </div>
